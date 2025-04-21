@@ -1,10 +1,24 @@
+import { useState } from "react";
 import styles from "@/styles/modal.module.scss";
+import { Book } from "@/types/book";
 
 type Props = {
   onClose: () => void;
+  onAddBook: (newBook: Book) => void;
 };
 
-const BookModal = ({ onClose }: Props) => {
+const AddBook = ({ onClose, onAddBook }: Props) => {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!title.trim() || !author.trim()) return;
+    const newBook: Book = { title, author };
+    onAddBook(newBook);
+    onClose();
+  };
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
@@ -12,7 +26,7 @@ const BookModal = ({ onClose }: Props) => {
           X
         </button>
         <h2 className={styles.modalTitle}>Add a New Book</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label htmlFor="title" className={styles.label}>
               Title
@@ -23,6 +37,8 @@ const BookModal = ({ onClose }: Props) => {
               name="title"
               placeholder="Enter book title"
               className={styles.inputField}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <div className={styles.formGroup}>
@@ -35,9 +51,10 @@ const BookModal = ({ onClose }: Props) => {
               name="author"
               placeholder="Enter author name"
               className={styles.inputField}
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
             />
           </div>
-
           <div className={styles.modalButtons}>
             <button
               type="button"
@@ -56,4 +73,4 @@ const BookModal = ({ onClose }: Props) => {
   );
 };
 
-export default BookModal;
+export default AddBook;

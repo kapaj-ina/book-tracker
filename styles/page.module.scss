@@ -10,8 +10,6 @@
 
   &Table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
 
     thead {
       background-color: #f0f0f0;
@@ -25,7 +23,7 @@
     }
   }
 
-  &AddButton {
+  &TableButton {
     padding: 8px 16px;
     border-radius: 8px;
     border: 1px solid #333;
